@@ -10,19 +10,19 @@ def hello_world():
 
 @app.route('/item/new', methods=['POST'])
 def add_item():
-    # get item from the POST body
+    # Get item from the POST body
     req_data = request.get_json()
     item = req_data['item']
 
-    # add item to the list
+    # Add item to the list
     res_data = helper.add_to_list(item)
 
-    # return error if item not added
+    # Return error if item not added
     if res_data is None:
         response = Response("{'error': 'Item not added - " + item + "'}", status=400 , mimetype='application/json')
         return response
 
-        #return response
+    # Return response
     response = Response(json.dumps(res_data), mimetype='application/json')
 
 return response
