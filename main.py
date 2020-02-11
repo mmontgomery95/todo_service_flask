@@ -93,5 +93,29 @@ def update_status():
     return response
 
 
+@app.route("/item/remove", methods=["DELETE"])
+def delete_item():
+    # get item from POST body
+    req_data = request.get_json()
+    item = req_data["item"]
+
+    # delete item from list
+    res_data = helper.delete_item(item)
+
+    # return error if unable to delete item
+    if res_data is None:
+        response = Response(
+            "{'error': 'Error deleting item - '" + item + "}",
+            status=400,
+            mimetype="application/json",
+        )
+        return response
+
+    # return response
+    response = Response(json.dumps(res_data), mimetype="application/json")
+
+    return response
+
+
 if __name__ == "__main__":
     app.run()
